@@ -17,7 +17,7 @@ if choose == 'y':
     print('Prank!')
     time.sleep(1.6)
     while True:
-        print('PRAAAAAANK!!!')
+        print('HAHAHA')
 if choose == 'n':
     pass
 if choose == 'i':
