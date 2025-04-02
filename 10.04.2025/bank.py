@@ -57,6 +57,13 @@ class BankClientList:
             print(f'Name: {current.name}, credit number: {current.account_number}, balance: {current.balance}')
             current = current.next
 
+    def update_balance(self, account_number, balance):
+        current = self.head
+        while current:
+            if current.account_number == account_number:
+                current.balance = balance
+            current = current.next
+
 bank_list = BankClientList()
 bank_list.add_client('Elon Musk', "246", 34735)
 bank_list.add_client('Bill Gates', "674", 15467)
