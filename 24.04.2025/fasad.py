@@ -1,6 +1,5 @@
 # Паттерн-фасад c легковесом и заместителем 
 from colorama import Fore, Style # Разноцветный принт
-import random
 
 class User:
     def __init__(self, user_id, user_type):
