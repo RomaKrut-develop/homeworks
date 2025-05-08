@@ -1,0 +1,19 @@
+h1{
+    text-align: center;
+    background-color: blue;
+}
+
+form{
+    background-color: brown;
+    color: aliceblue;
+    font-size: 54px;
+}
+
+input{
+    font-size: 40px;
+}
+
+button{
+    border-radius: 10px 10px 10px 10px;
+    font-size: 20px;
+}
