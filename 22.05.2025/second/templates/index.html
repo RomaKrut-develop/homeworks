@@ -1,0 +1,21 @@
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать</h1>
+    
+    {% if is_logged_in %}
+        {% if user_role == "admin" %}
+            <div class="admin-panel">
+                <h2>Добро пожаловать, Админ!</h2>
+                <p>Вы можете использовать функции модерации.</p>
+            </div>
+        {% else %}
+            <p>Добро пожаловать, пользователь!</p>
+        {% endif %}
+    {% else %}
+        <div class="login-prompt">
+            <h2>Войдите в систему</h2>
+            <p>Пожалуйста, авторизуйтесь.</p>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% block title %}Товары и пользователи{% endblock %}
+
+{% block content %}
+    <h1>Список пользователей</h1>
+    <ul class="user-list">
+        {% for user in users %}
+            <li>{{ loop.index }}. {{ user }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h1>Список товаров</h1>
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Название</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

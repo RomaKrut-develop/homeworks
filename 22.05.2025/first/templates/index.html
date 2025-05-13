@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Мы украдем все ваши данные</title>
+</head>
+
+<body>
+    <h1>Здраствуйте, пройдите нашу небольшую форму!</h1>
+    <h5>Это абсолютно безопасно</h5>
+    <form method="get" action="/name">
+        <label>Имя:</label>
+        <input type="text" placeholder="Введите имя" name="name">
+    </form>
+    <form method="get" action="/password">
+        <label>Пароль:</label>
+        <input type="submit" placeholder="Введите Пароль" name="password">
+    </form>
+    <form method="get" action="/email">
+        <label>Электронная почта:</label>
+        <input type="email" placeholder="Введите почту" name="email">
+    </form>
+    <form method="get" action="/age">
+        <label>Возраст:</label>
+        <input type="number" placeholder="Введите возраст" name="age">
+    </form>
+    <form method='get' action="gender">
+        <label>Пол:</label>
+        <label>Женский:</label><input type="radio" name="gender"><label>Мужской:</label><input type="radio" name="gender"><br>
+        <label>Увлечения:</label>
+    </form>
+    <form method="get" action="hobby">
+        <label for="prog">Программирование</label>
+        <input type="checkbox" id="prog" name="hobby">
+        <label for="prog">Граф. дизайн</label>
+        <input type="checkbox" id="graphic" name="hobby">
+        <label for="prog">Другое</label>
+        <input type="checkbox" id="other" name="hobby">
+        <label>Город:</label>
+    </form>
+    <form method="get" action="city">
+        <select name="city">
+            <option value="">Выберите город</option>
+            <option value="sochi">Сочи</option>
+            <option value="sochi">Пекин</option>
+            <option value="sochi">Москва</option>
+        </select>
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+
+</html>
