@@ -1,0 +1,6 @@
+[2025-05-14 17:30:12] [INFO] add_task: Task added: Task_0
+[2025-05-14 17:30:12] [INFO] add_task: Task added: Task_1
+[2025-05-14 17:30:12] [INFO] add_task: Task added: Task_2
+[2025-05-14 17:30:12] [INFO] process_task: Processing task: Task_0. Queue size: 2
+[2025-05-14 17:30:12] [INFO] process_task: Processing task: Task_1. Queue size: 1
+[2025-05-14 17:30:12] [INFO] process_task: Processing task: Task_2. Queue size: 0
