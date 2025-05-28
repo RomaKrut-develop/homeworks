@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Форма регистрации</title>
+</head>
+<body>
+    <h1>Форма регистрации</h1>
+    <form method="POST" action="/submit">
+        <div>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="age">Возраст:</label>
+            <input type="number" id="age" name="age" min="1" max="120" required>
+        </div>
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+</html>
