@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .error {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .valid {
+            border-color: #4CAF50;
+        }
+        
+        .invalid {
+            border-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>Регистрация пользователя</h1>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="username">Юзернейм:</label>
+            <input type="text" id="username" name="username" required>
+            <div class="error" id="usernameError">
+                Юзернейм должен содержать только буквы, цифры, _, - (3-20 символов), не начинаться с цифры или спецсимвола
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Электронная почта:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error" id="emailError">
+                Введите корректный email (например, user@example.com)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+            <div class="error" id="passwordError">
+                Пароль должен быть не менее 8 символов, содержать заглавную букву, цифру и спецсимвол
+            </div>
+        </div>
+        
+        <button type="submit" id="submitBtn" disabled>Зарегистрироваться</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Регулярные выражения для валидации
+            const usernameRegex = /^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ0-9_-]{2,19}$/;
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+            
+            // Флаги валидности полей
+            let isUsernameValid = false;
+            let isEmailValid = false;
+            let isPasswordValid = false;
+            
+            // Проверка всех полей и активация кнопки
+            function checkFormValidity() {
+                submitBtn.disabled = !(isUsernameValid && isEmailValid && isPasswordValid);
+            }
+            
+            // Валидация юзернейма
+            usernameInput.addEventListener('input', function() {
+                const username = usernameInput.value;
+                const errorElement = document.getElementById('usernameError');
+                
+                if (usernameRegex.test(username)) {
+                    isUsernameValid = true;
+                    usernameInput.classList.remove('invalid');
+                    usernameInput.classList.add('valid');
+                    errorElement.style.display = 'none';
+                } else {
+                    isUsernameValid = false;
+                    usernameInput.classList.remove('valid');
+                    usernameInput.classList.add('invalid');
+                    errorElement.style.display = 'block';
+                }
+                
+                checkFormValidity();
+            });
+            
+            // Валидация email
+            emailInput.addEventListener('input', function() {
+                const email = emailInput.value;
+                const errorElement = document.getElementById('emailError');
+                
+                if (emailRegex.test(email)) {
+                    isEmailValid = true;
+                    emailInput.classList.remove('invalid');
+                    emailInput.classList.add('valid');
+                    errorElement.style.display = 'none';
+                } else {
+                    isEmailValid = false;
+                    emailInput.classList.remove('valid');
+                    emailInput.classList.add('invalid');
+                    errorElement.style.display = 'block';
+                }
+                
+                checkFormValidity();
+            });
+            
+            // Валидация пароля
+            passwordInput.addEventListener('input', function() {
+                const password = passwordInput.value;
+                const errorElement = document.getElementById('passwordError');
+                
+                if (passwordRegex.test(password)) {
+                    isPasswordValid = true;
+                    passwordInput.classList.remove('invalid');
+                    passwordInput.classList.add('valid');
+                    errorElement.style.display = 'none';
+                } else {
+                    isPasswordValid = false;
+                    passwordInput.classList.remove('valid');
+                    passwordInput.classList.add('invalid');
+                    errorElement.style.display = 'block';
+                }
+                
+                checkFormValidity();
+            });
+            
+            // Обработка отправки формы
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (isUsernameValid && isEmailValid && isPasswordValid) {
+                    // Здесь можно отправить данные на сервер
+                    alert('Форма успешно отправлена!');
+                    form.reset();
+                    usernameInput.classList.remove('valid');
+                    emailInput.classList.remove('valid');
+                    passwordInput.classList.remove('valid');
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
