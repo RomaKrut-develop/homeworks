@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваше приложение заметок</title>
+</head>
+<body>
+    <h1>Привет, {{ current_user.username }}!</h1>
+    <form action="/add_task" method="POST">
+        <input type="text" name="title" placeholder="Task Title" required>
+        <textarea name="description" placeholder="Task Description"></textarea>
+        <button type="submit">Добавить</button>
+    </form>
+    <h2>Ваши заметки:</h2>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task.title }} - {{ task.description }}
+                <a href="/delete_task/{{ task.id }}">Убрать</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/logout">Выйти</a>
+</body>
+</html>
