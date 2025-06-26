@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggregator</title>
+</head>
+<body>
+    <h1>Новостной Агрегатор</h1>
+    
+    <a href="{% url 'update_news' %}" class="update-btn">Update News</a>
+    
+    {% for item in news_items %}
+    <div class="news-item">
+        <h2><a href="{{ item.url }}" target="_blank">{{ item.title }}</a></h2>
+        <div class="source">Source: {{ item.source.name }} | {{ item.published_at }}</div>
+    </div>
+    {% empty %}
+    <p>No news items available. Please update news.</p>
+    {% endfor %}
+</body>
+</html>
