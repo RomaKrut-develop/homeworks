@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Список задач</h1>
+
+<div class="filters">
+    <form method="get" class="filter-form">
+        <div class="form-group">
+            <label for="category">Категория:</label>
+            <select name="category" id="category" onchange="this.form.submit()">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if current_category == category.id|stringformat:"s" %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="is_completed">Статус:</label>
+            <select name="is_completed" id="is_completed" onchange="this.form.submit()">
+                <option value="">Все</option>
+                <option value="1" {% if is_completed_filter == "1" %}selected{% endif %}>Выполненные</option>
+                <option value="0" {% if is_completed_filter == "0" %}selected{% endif %}>Не выполненные</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="sort">Сортировка:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="-created_at" {% if sort_option == "-created_at" %}selected{% endif %}>Новые сначала</option>
+                <option value="created_at_asc" {% if sort_option == "created_at_asc" %}selected{% endif %}>Старые сначала</option>
+                <option value="priority" {% if sort_option == "priority" %}selected{% endif %}>По приоритету</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="search" placeholder="Поиск по названию" value="{{ search_query }}">
+            <button type="submit">Искать</button>
+        </div>
+    </form>
+</div>
+
+<a href="{% url 'task_create' %}" class="btn btn-primary">Создать задачу</a>
+
+<ul class="task-list">
+    {% for task in tasks %}
+    <li class="task-item {% if task.is_completed %}completed{% endif %} priority-{{ task.priority }}">
+        <div class="task-header">
+            <h3>{{ task.title }}</h3>
+            <div class="task-actions">
+                <a href="{% url 'task_update' task.pk %}" class="btn btn-edit">Редактировать</a>
+                <a href="{% url 'task_delete' task.pk %}" class="btn btn-delete">Удалить</a>
+                <form action="{% url 'toggle_task_completion' task.pk %}" method="post" class="toggle-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-toggle">
+                        {% if task.is_completed %}Отметить невыполненной{% else %}Отметить выполненной{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        {% if task.description %}
+        <p class="task-description">{{ task.description }}</p>
+        {% endif %}
+        
+        <div class="task-meta">
+            <span class="task-category">
+                {% if task.category %}
+                Категория: {{ task.category.name }}
+                {% else %}
+                Без категории
+                {% endif %}
+            </span>
+            <span class="task-priority">Приоритет: {{ task.get_priority_display }}</span>
+            <span class="task-created">Создано: {{ task.created_at|date:"d.m.Y H:i" }}</span>
+            {% if task.is_completed %}
+            <span class="task-completed">Выполнено: {{ task.completed_at|date:"d.m.Y H:i" }}</span>
+            {% endif %}
+        </div>
+    </li>
+    {% empty %}
+    <li class="no-tasks">Нет задач, соответствующих критериям поиска.</li>
+    {% endfor %}
+</ul>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Предыдущая</a>
+    {% endif %}
+    
+    <span class="current-page">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Следующая</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
