@@ -1,0 +1,12 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <p>By {{ article.author.username }} on {{ article.created_at }}</p>
+    <p>Last updated: {{ article.updated_at }}</p>
+    <div>{{ article.content }}</div>
+    {% if user == article.author %}
+        <p><a href="#">Правка</a> | <a href="#">Удалить</a></p>
+    {% endif %}
+    <p><a href="{% url 'article_list' %}">Назад</a></p>
+{% endblock %}

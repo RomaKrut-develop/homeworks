@@ -1,0 +1,14 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <h1>Articles</h1>
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'article_create' %}">Создать новую статью</a></p>
+    {% endif %}
+    {% for article in articles %}
+        <div>
+            <h2><a href="{% url 'article_detail' pk=article.pk %}">{{ article.title }}</a></h2>
+            <p>От {{ article.author.username }} для {{ article.created_at }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
